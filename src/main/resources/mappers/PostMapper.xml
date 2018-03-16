@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.sj.mapper.PostMapper">
+
+	<insert id="create" useGeneratedKeys="true" keyProperty="post_id">
+		INSERT INTO
+			post (post_id, user_id, post_regdate, post_updatedate, post_heart, post_replycount, title, post_content, viewcount, filename)
+		VALUES
+			(LAST_INSERT_ID(), #{userId}, #{postRegdate}, #{postUpdatedate}, #{postHeart}, #{postReplycount}, #{title}, #{postContent}, #{viewcount}, #{filename})
+	</insert>
+
+	<select id="read" resultType="com.sj.domain.PostVO">
+		SELECT
+			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, post_heart AS postHeart, 
+			post_replycount AS postReplycount, title AS title, post_content AS postContent, viewcount AS viewcount, filename AS filename
+		FROM
+			post
+		WHERE
+			post_id = #{postId}
+	</select>
+	
+	
+	<select id="listAll" resultType="com.sj.domain.PostVO">
+		SELECT
+			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, post_heart AS postHeart, 
+			post_replycount AS postReplycount, title AS title, post_content AS postContent, viewcount AS viewcount, filename AS filename
+		FROM
+			post
+		ORDER BY
+			post_regdate DESC
+	</select>
+	
+	<update id="update">
+		UPDATE
+			post
+		SET
+			title = #{title}, post_content = #{postContent}, post_updatedate = #{postUpdatedate}, filename = #{filename}
+		WHERE
+			post_id = #{postId}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM
+			post
+		WHERE
+			post_id = #{postId}
+	</delete>
+
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.sj.mapper.ReplyMapper">
+
+	<insert id="create" useGeneratedKeys="true" keyProperty="reply_id">
+		INSERT INTO
+			reply (reply_id, reply_regdate, reply_updatedate, reply_replycount, reply_content, depth, user_id, post_id, reply_reply_id, reply_flag)
+		VALUES
+			(LAST_INSERT_ID(), #{replyRegdate}, #{replyUpdatedate}, #{replyReplycount}, #{replyContent}, #{depth}, #{userId}, #{postId}, #{replyReplyId}, #{replyFlag})
+	</insert>
+
+	<select id="list" resultType="com.sj.domain.ReplyVO">
+		SELECT
+			reply_id AS replyId, reply_regdate AS replyRegdate, reply_updatedate AS replyUpdatedate, reply_replycount AS replyReplycount,
+			reply_content AS replyContent, depth AS depth, user_id AS userId, post_id AS postId, reply_reply_id AS replyReplyId, reply_flag AS replyFlag
+		FROM
+			reply
+		WHERE
+			post_id = #{postId}
+		ORDER BY
+			reply_regdate DESC
+	</select>
+	
+	<select id="listAll" resultType="com.sj.domain.ReplyVO">
+		SELECT
+			reply_id AS replyId, reply_regdate AS replyRegdate, reply_updatedate AS replyUpdatedate, reply_replycount AS replyReplycount,
+			reply_content AS replyContent, depth AS depth, user_id AS userId, post_id AS postId, reply_reply_id AS replyReplyId, reply_flag AS replyFlag
+		FROM
+			reply
+		ORDER BY
+			reply_regdate DESC
+	</select>
+	
+	<update id="update">
+		
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM
+			reply
+		WHERE
+			reply_id = #{replyId}
+	</delete>
+
+
+</mapper>
