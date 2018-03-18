@@ -2,21 +2,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page session="false" %>
+<%
+	String ctx = request.getContextPath();
+	pageContext.setAttribute("ctx", ctx);
+%>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link href="<%=request.getContextPath() %>/resources/css/style.css" rel="stylesheet">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Home</title>
 </head>
 <body>
-<h1>
-	Hello world!  
-</h1>
-
- The time on the server is ${serverTime}.
+<div class="head">
+<br>
+게시판
 <br><br>
-<input type=button value="login" onclick="location.href='user/login'">
-<input type=button value="join" onclick="location.href='user/join'">
+</div>
+
+<br><br>
+<div class="body">
+	<table style="width: 550px; margin: auto; text-align: center;">
+		<tr>
+		<td>
+		<button class="headbutton" type=button onclick="location.href='user/login'">로그인</button>
+		<button class="headbutton" type=button onclick="location.href='user/join'">회원가입</button>
+	</table>
+</div>
+
 
 
 </body>

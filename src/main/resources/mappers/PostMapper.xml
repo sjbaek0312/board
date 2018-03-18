@@ -7,7 +7,7 @@
 
 	<insert id="create" useGeneratedKeys="true" keyProperty="post_id">
 		INSERT INTO
-			post (post_id, user_id, post_regdate, post_updatedate, post_heart, post_replycount, title, post_content, viewcount, filename)
+			board.post (post_id, user_id, post_regdate, post_updatedate, post_heart, post_replycount, title, post_content, viewcount, filename)
 		VALUES
 			(LAST_INSERT_ID(), #{userId}, #{postRegdate}, #{postUpdatedate}, #{postHeart}, #{postReplycount}, #{title}, #{postContent}, #{viewcount}, #{filename})
 	</insert>
@@ -17,7 +17,7 @@
 			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, post_heart AS postHeart, 
 			post_replycount AS postReplycount, title AS title, post_content AS postContent, viewcount AS viewcount, filename AS filename
 		FROM
-			post
+			board.post
 		WHERE
 			post_id = #{postId}
 	</select>
@@ -28,14 +28,14 @@
 			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, post_heart AS postHeart, 
 			post_replycount AS postReplycount, title AS title, post_content AS postContent, viewcount AS viewcount, filename AS filename
 		FROM
-			post
+			board.post
 		ORDER BY
 			post_regdate DESC
 	</select>
 	
 	<update id="update">
 		UPDATE
-			post
+			board.post
 		SET
 			title = #{title}, post_content = #{postContent}, post_updatedate = #{postUpdatedate}, filename = #{filename}
 		WHERE
@@ -44,7 +44,7 @@
 	
 	<delete id="delete">
 		DELETE FROM
-			post
+			board.post
 		WHERE
 			post_id = #{postId}
 	</delete>

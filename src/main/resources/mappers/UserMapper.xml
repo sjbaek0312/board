@@ -7,7 +7,7 @@
 
 	<insert id="create">
 		INSERT INTO
-			user (user_id, user_pw, user_name, email, user_regdate, user_postcount, user_replycount)
+			board.user (user_id, user_pw, user_name, email, user_regdate, user_postcount, user_replycount)
 		VALUES
 			(#{userId}, #{userPw}, #{userName}, #{email}, #{userRegdate}, #{userPostcount}, #{userReplycount})
 	</insert>
@@ -17,7 +17,7 @@
 			user_id AS userId, user_pw AS userPw, user_name AS userName, email AS email,
 			user_regdate AS userRegdate, user_postcount AS userPostcount, user_replycount AS userReplycount
 		FROM
-			user
+			board.user
 		WHERE
 			user_id = #{userId}
 	</select>
@@ -27,12 +27,12 @@
 			user_id AS userId, user_pw AS userPw, user_name AS userName, email AS email,
 			user_regdate AS userRegdate, user_postcount AS userPostcount, user_replycount AS userReplycount
 		FROM
-			user
+			board.user
 	</select>
 	
 	<update id="update">
 		UPDATE
-			user
+			board.user
 		SET
 			user_pw = #{userPw}, user_name = #{userName}, email = #{email}
 		WHERE
@@ -41,7 +41,7 @@
 	
 	<delete id="delete">
 		DELETE FROM
-			user
+			board.user
 		WHERE
 			user_id = #{userId}
 	</delete>
@@ -51,7 +51,7 @@
 			user_id AS userId, user_pw AS userPw, user_name AS userName, email AS email,
 			user_regdate AS userRegdate, user_postcount AS userPostcount, user_replycount AS userReplycount
 		FROM
-			user
+			board.user
 		WHERE
 			user_id = #{userId} AND user_pw = #{userPw}
 	</select>

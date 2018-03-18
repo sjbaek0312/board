@@ -4,40 +4,72 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	String ctx = request.getContextPath();
+	pageContext.setAttribute("ctx", ctx);
+%>
 <html>
-
 <head>
+<link href="<%=request.getContextPath() %>/resources/css/style.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>게시물 수정</title>
 </head>
 
 <body>
-게시물 수정하기
-<br><br><br><br>
-<form id="form1" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="postId" value="${postVO.postId }">
-	작성자<br><input type="text" name="userId" style="width: 600px; background-color: #D5D5D5" readonly="readonly" value="${postVO.userId }">
-	<br>
-	제목<br><input type="text" name="title" style="width: 600px" value="${postVO.title }">
-	<br>
-	내용<br><textarea name="postContent" rows="15" style="width: 600px">${postVO.postContent }</textarea>
-	<br>
-	<c:set var="fileName" value="${postVO.filename }" />
-	<c:set var="filenameLength" value="${fn:length(fileName) }" />
-	 파일 (용량제한 : 10MB)<input type="file" name="file">
-	 	<c:if test="${fileName != null }">
-	 		(현재 파일 : ${fn:substring(fileName, 37, filenameLength) })
-		</c:if>
-	<br>
-	<input type="submit" value="수정" onclick="post_update();">
-	<script>
-		function post_update()
-		{
-			alert("게시물이 수정되었습니다.");
-		}
-	</script>
-	<input type="button" value="취소" onclick="location.href='/post/listAll'">
-</form>
+<div class="head">
+<br>
+&emsp;게시물 수정
+<br><br>
+</div>
 
+<br><br>
+<div class="body">
+	<form id="form1" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="postId" value="${postVO.postId }">
+		<table style="width: 550px; margin: auto; text-align: center;">
+		<c:set var="fileName" value="${postVO.filename }" />
+		<c:set var="filenameLength" value="${fn:length(fileName) }" />
+			<tr>
+				<td>작성자</td>
+			</tr>
+			<tr>
+				<td><input type="text" name="userId" style="width: 600px; background-color: #D5D5D5" readonly="readonly" value="${postVO.userId }"></td>
+			</tr>
+			<tr>
+				<td>제목</td>
+			</tr>
+			<tr>
+				<td><input type="text" name="title" style="width: 600px" value="${postVO.title }"></td>
+			</tr>
+			<tr>
+				<td>내용</td>
+			</tr>
+			<tr>
+				<td><textarea name="postContent" rows="15" style="width: 600px">${postVO.postContent }</textarea></td>
+			</tr>
+			<tr>
+				<td>파일 (용량 제한 : 10MB)</td>
+			</tr>
+			<tr>
+				<td><input type="file" name="file"></td>
+			</tr>
+			<tr>
+				<td><c:if test="${fileName != null }">
+			 		(현재 파일 : ${fn:substring(fileName, 37, filenameLength) })
+				</c:if></td>
+			</tr>
+			<tr>
+				<td><button class="bodybutton" type="submit" onClick="post_update();">수정</button>
+				<button class="bodybutton" type="button" onclick="location.href='/post/listAll'">취소</button></td>
+			</tr>
+		</table>
+		<script>
+			function post_update()
+			{
+				alert("게시물이 수정되었습니다.");
+			}
+		</script>
+	</form>
+</div>
 </body>
 </html>
