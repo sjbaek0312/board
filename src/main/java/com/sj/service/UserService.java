@@ -5,23 +5,21 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.sj.domain.UserVO;
-import com.sj.dto.LoginDTO;
-import com.sj.persistence.UserDAO;
+import com.sj.dao.UserDAO;
+import com.sj.vo.LoginDTO;
+import com.sj.vo.UserVO;
 
 @Service
 public class UserService {
-
-//	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+	
 	@Inject private UserDAO dao;
 	
 	public void create(UserVO vo)
 	{
 		vo.setUserRegdate(new Date());
+		vo.setUserFlag('Y');
 		dao.create(vo);
 	}
 	

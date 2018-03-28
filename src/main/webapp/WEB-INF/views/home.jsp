@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <%@ page session="false" %>
 <%
 	String ctx = request.getContextPath();
@@ -15,7 +16,7 @@
 <body>
 <div class="head">
 <br>
-게시판
+&emsp;게시판
 <br><br>
 </div>
 

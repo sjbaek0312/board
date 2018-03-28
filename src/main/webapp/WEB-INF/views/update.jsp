@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <%
 	String ctx = request.getContextPath();
 	pageContext.setAttribute("ctx", ctx);
@@ -25,16 +25,9 @@
 <br><br>
 <div class="body">
 	<form id="form1" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="postId" value="${postVO.postId }">
 		<table style="width: 550px; margin: auto; text-align: center;">
 		<c:set var="fileName" value="${postVO.filename }" />
 		<c:set var="filenameLength" value="${fn:length(fileName) }" />
-			<tr>
-				<td>작성자</td>
-			</tr>
-			<tr>
-				<td><input type="text" name="userId" style="width: 600px; background-color: #D5D5D5" readonly="readonly" value="${postVO.userId }"></td>
-			</tr>
 			<tr>
 				<td>제목</td>
 			</tr>

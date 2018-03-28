@@ -16,11 +16,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
 	{
 		HttpSession session = request.getSession();
-
+		
 		if (session.getAttribute("login") == null)
 		{
 			logger.info("current user not logined.");
-			response.sendRedirect("/user/login");
+			response.sendRedirect("/user/sessioninvalidated");
 		}
 		
 		return true;

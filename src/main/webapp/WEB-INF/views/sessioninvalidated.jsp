@@ -4,15 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>로그인 실패</title>
+<title>오류</title>
 </head>
 <script type="text/javascript">
-	function login_failed()
+	function session_invalidated()
 	{
-		alert("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
+		alert("세션이 만료되었습니다. 다시 로그인 해주세요.");
 		location.href="/user/login";
 	}
 </script>
-<body onload="login_failed()">
+<body onload="session_invalidated()">
+
 </body>
 </html>

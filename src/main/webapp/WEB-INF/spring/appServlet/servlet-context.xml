@@ -48,6 +48,7 @@
 			<mapping path="/post/delete" />
 			<mapping path="/user/modify" />
 			<mapping path="/user/withdrawconfig" />
+			<mapping path="/user/logout" />
 			<beans:ref bean="authInterceptor" />
 		</interceptor>
 	</interceptors>

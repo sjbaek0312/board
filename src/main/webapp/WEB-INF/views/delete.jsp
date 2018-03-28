@@ -4,15 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>로그인 실패</title>
+<title>게시물 삭제</title>
 </head>
 <script type="text/javascript">
-	function login_failed()
+	function post_delete()
 	{
-		alert("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
-		location.href="/user/login";
+		alert("게시물이 삭제되었습니다.");
+		location.href="/post/listAll";
 	}
 </script>
-<body onload="login_failed()">
+<body onload="post_delete()">
+
 </body>
 </html>

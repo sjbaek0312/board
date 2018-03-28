@@ -7,37 +7,52 @@
 
 	<insert id="create" useGeneratedKeys="true" keyProperty="post_id">
 		INSERT INTO
-			board.post (post_id, user_id, post_regdate, post_updatedate, post_heart, post_replycount, title, post_content, viewcount, filename)
+			board.post (post_id, user_id, post_regdate, post_updatedate, post_heart, title, post_content, filename, post_flag)
 		VALUES
-			(LAST_INSERT_ID(), #{userId}, #{postRegdate}, #{postUpdatedate}, #{postHeart}, #{postReplycount}, #{title}, #{postContent}, #{viewcount}, #{filename})
+			(LAST_INSERT_ID(), #{userId}, #{postRegdate}, #{postUpdatedate}, #{postHeart}, #{title}, #{postContent}, #{filename}, #{postFlag})
 	</insert>
 
-	<select id="read" resultType="com.sj.domain.PostVO">
+	<select id="read" resultType="com.sj.vo.PostVO">
 		SELECT
 			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, post_heart AS postHeart, 
-			post_replycount AS postReplycount, title AS title, post_content AS postContent, viewcount AS viewcount, filename AS filename
+			title AS title, post_content AS postContent, filename AS filename, post_flag AS postFlag
 		FROM
 			board.post
 		WHERE
 			post_id = #{postId}
 	</select>
 	
-	
-	<select id="listAll" resultType="com.sj.domain.PostVO">
+	<select id="listAll" resultType="com.sj.vo.PostVO">
 		SELECT
 			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, post_heart AS postHeart, 
-			post_replycount AS postReplycount, title AS title, post_content AS postContent, viewcount AS viewcount, filename AS filename
+			title AS title, post_content AS postContent, filename AS filename, post_flag AS postFlag
 		FROM
 			board.post
+		WHERE
+			post_flag = "Y"
 		ORDER BY
 			post_regdate DESC
+	</select>
+	
+	<select id="list5" resultType="com.sj.vo.PostVO">
+		SELECT
+			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, post_heart AS postHeart, 
+			title AS title, post_content AS postContent, filename AS filename, post_flag AS postFlag
+		FROM
+			board.post
+		WHERE
+			post_flag = "Y"
+		ORDER BY
+			post_regdate DESC
+		LIMIT
+			#{pageNum}, 5
 	</select>
 	
 	<update id="update">
 		UPDATE
 			board.post
 		SET
-			title = #{title}, post_content = #{postContent}, post_updatedate = #{postUpdatedate}, filename = #{filename}
+			title = #{title}, post_content = #{postContent}, post_updatedate = #{postUpdatedate}, filename = #{filename}, post_flag = #{postFlag}
 		WHERE
 			post_id = #{postId}
 	</update>

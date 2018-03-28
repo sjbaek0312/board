@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <%
 	String ctx = request.getContextPath();
 	pageContext.setAttribute("ctx", ctx);
@@ -46,7 +46,7 @@
 		</tr>
 		<tr>
 			<td><button class="bodybutton" type="submit">등록</button>
-			<button class="bodybutton" type="button" onclick="location.href='listAll'">취소</button></td>
+			<button class="bodybutton" type="button" onclick="location.href='/post/listAll'">취소</button></td>
 		</tr>
 	</table>
 	</form>

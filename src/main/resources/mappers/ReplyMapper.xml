@@ -7,40 +7,72 @@
 
 	<insert id="create" useGeneratedKeys="true" keyProperty="reply_id">
 		INSERT INTO
-			reply (reply_id, reply_regdate, reply_updatedate, reply_replycount, reply_content, depth, user_id, post_id, reply_reply_id, reply_flag)
+			board.reply (reply_id, reply_regdate, reply_updatedate, reply_content, user_id, post_id, parent_reply_id, reply_flag)
 		VALUES
-			(LAST_INSERT_ID(), #{replyRegdate}, #{replyUpdatedate}, #{replyReplycount}, #{replyContent}, #{depth}, #{userId}, #{postId}, #{replyReplyId}, #{replyFlag})
+			(LAST_INSERT_ID(), #{replyRegdate}, #{replyUpdatedate}, #{replyContent}, #{userId}, #{postId}, #{parentReplyId}, #{replyFlag})
 	</insert>
 
-	<select id="list" resultType="com.sj.domain.ReplyVO">
+	<select id="list" resultType="com.sj.vo.ReplyVO">
 		SELECT
-			reply_id AS replyId, reply_regdate AS replyRegdate, reply_updatedate AS replyUpdatedate, reply_replycount AS replyReplycount,
-			reply_content AS replyContent, depth AS depth, user_id AS userId, post_id AS postId, reply_reply_id AS replyReplyId, reply_flag AS replyFlag
+			reply_id AS replyId, reply_regdate AS replyRegdate, reply_updatedate AS replyUpdatedate, reply_content AS replyContent,
+			user_id AS userId, post_id AS postId, parent_reply_id AS parentReplyId, reply_flag AS replyFlag
 		FROM
-			reply
+			board.reply
 		WHERE
-			post_id = #{postId}
+			post_id = #{postId} AND parent_reply_id = 0 AND reply_flag = "Y"
 		ORDER BY
 			reply_regdate DESC
 	</select>
 	
-	<select id="listAll" resultType="com.sj.domain.ReplyVO">
+	<select id="listDepth1" resultType="com.sj.vo.ReplyVO">
 		SELECT
-			reply_id AS replyId, reply_regdate AS replyRegdate, reply_updatedate AS replyUpdatedate, reply_replycount AS replyReplycount,
-			reply_content AS replyContent, depth AS depth, user_id AS userId, post_id AS postId, reply_reply_id AS replyReplyId, reply_flag AS replyFlag
+			reply_id AS replyId, reply_regdate AS replyRegdate, reply_updatedate AS replyUpdatedate, reply_content AS replyContent,
+			user_id AS userId, post_id AS postId, parent_reply_id AS parentReplyId, reply_flag AS replyFlag
 		FROM
-			reply
+			board.reply
+		WHERE
+			parent_reply_id = #{replyId} AND reply_flag = "Y"
 		ORDER BY
 			reply_regdate DESC
+	</select>
+	
+	<select id="listAll" resultType="com.sj.vo.ReplyVO">
+		SELECT
+			reply_id AS replyId, reply_regdate AS replyRegdate, reply_updatedate AS replyUpdatedate, reply_content AS replyContent,
+			user_id AS userId, post_id AS postId, parent_reply_id AS parentReplyId, reply_flag AS replyFlag
+		FROM
+			board.reply
+		WHERE
+			reply_flag = "Y"
+		ORDER BY
+			reply_regdate DESC
+	</select>
+	
+	<select id="list2" resultType="com.sj.vo.ReplyVO">
+		SELECT
+			reply_id AS replyId, reply_regdate AS replyRegdate, reply_updatedate AS replyUpdatedate, reply_content AS replyContent,
+			user_id AS userId, post_id AS postId, parent_reply_id AS parentReplyId, reply_flag AS replyFlag
+		FROM
+			board.reply
+		WHERE
+			post_id = #{postId} AND reply_flag = "Y"
+		ORDER BY
+			reply_regdate DESC
+		LIMIT 2
 	</select>
 	
 	<update id="update">
-		
+		UPDATE
+			board.reply
+		SET
+			reply_updatedate = #{replyUpdatedate}, reply_content = #{replyContent}
+		WHERE
+			reply_id = #{replyId}
 	</update>
 	
 	<delete id="delete">
 		DELETE FROM
-			reply
+			board.reply
 		WHERE
 			reply_id = #{replyId}
 	</delete>

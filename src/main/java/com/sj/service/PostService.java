@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sj.domain.PostVO;
-import com.sj.persistence.PostDAO;
+import com.sj.dao.PostDAO;
+import com.sj.vo.PostVO;
 
 @Service
 public class PostService {
@@ -53,10 +53,6 @@ public class PostService {
 						break;
 					os.write(buffer, 0, count);
 				}
-
-				vo.setUserId(userId);
-				vo.setPostRegdate(new Date());
-				vo.setPostUpdatedate(new Date());
 			}	
 			finally
 			{
@@ -72,6 +68,10 @@ public class PostService {
 			logger.info("attachment : " + file.getOriginalFilename());
 			vo.setFilename(newFilename);
 		}
+		vo.setUserId(userId);
+		vo.setPostRegdate(new Date());
+		vo.setPostUpdatedate(new Date());
+		vo.setPostFlag('Y');
 		dao.create(vo);
 	}
 	
@@ -85,14 +85,16 @@ public class PostService {
 		return dao.listAll();
 	}
 	
+	public List<PostVO> list5(int pageNum)
+	{
+		return dao.list5(pageNum);
+	}
+	
 	public void update(PostVO vo, MultipartFile file, int postId) throws IOException
 	{
 		logger.info("loginUserId and postUserId are matching... post updated.");
-
 		String deleteFilename = dao.read(postId).getFilename();
 		
-		vo.setPostUpdatedate(new Date());
-
 		if (!file.getOriginalFilename().equals(""))
 		{
 			UUID uuid = UUID.randomUUID();
@@ -139,6 +141,8 @@ public class PostService {
 			vo.setFilename(deleteFilename);
 		}
 
+		vo.setPostUpdatedate(new Date());
+		vo.setPostFlag('Y');
 		dao.update(vo);
 	}
 	
