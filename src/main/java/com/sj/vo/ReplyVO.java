@@ -11,6 +11,7 @@ public class ReplyVO {
 	private int postId;
 	private String userId;
 	private int parentReplyId;
+	private int replyReplycount;
 	private char replyFlag;
 	
 	public int getReplyId() {
@@ -54,6 +55,12 @@ public class ReplyVO {
 	}
 	public void setParentReplyId(int parentReplyId) {
 		this.parentReplyId = parentReplyId;
+	}
+	public int getReplyReplycount() {
+		return replyReplycount;
+	}
+	public void setReplyReplycount(int replyReplycount) {
+		this.replyReplycount = replyReplycount;
 	}
 	public char getReplyFlag() {
 		return replyFlag;

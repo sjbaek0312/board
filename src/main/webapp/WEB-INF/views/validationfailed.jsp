@@ -10,7 +10,7 @@
 	function validation_failed()
 	{
 		alert("자신의 글이 아닙니다.");
-		location.href="/post/listAll";
+		location.href="/post/readAll";
 	}
 </script>
 <body onload="validation_failed()">

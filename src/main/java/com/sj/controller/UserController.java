@@ -11,32 +11,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sj.dto.LoginDTO;
 import com.sj.service.UserService;
-import com.sj.vo.LoginDTO;
 import com.sj.vo.UserVO;
 
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
 
-	@Inject UserService service;
+	@Inject UserService userService;
 	
 	// login, logout
 	@GetMapping(value = "/login")
-	public String loginGET(@ModelAttribute("dto") LoginDTO dto)
+	public String loginGET(@ModelAttribute("dto") LoginDTO loginDTO)
 	{
 		return "login";
 	}
 	@PostMapping(value = "/loginpost")
-	public String loginPOST(LoginDTO dto, Model model)
+	public String loginPOST(LoginDTO loginDTO, Model model)
 	{
-		UserVO vo = service.login(dto);
+		UserVO userVO = userService.login(loginDTO);
 
-		if (vo != null)
+		if (userVO != null)
 		{
-			if (vo.getUserFlag() == 'Y')
+			if (userVO.getUserFlag() == 'Y')
 			{
-				model.addAttribute("userVO", vo);
+				model.addAttribute("userVO", userVO);
 			}
 		}
 		return "loginpost";
@@ -68,9 +68,9 @@ public class UserController {
 		return "join";
 	}
 	@PostMapping(value = "/join")
-	public String joinPOST(UserVO vo)
+	public String joinPOST(UserVO userVO)
 	{
-		service.create(vo);
+		userService.create(userVO);
 		return "redirect:/user/login";
 	}
 
@@ -81,13 +81,13 @@ public class UserController {
 		return "modify";
 	}
 	@PostMapping(value = "/modify")
-	public String modifyPOST(HttpSession session, UserVO vo)
+	public String modifyPOST(HttpSession session, UserVO userVOByForm)
 	{
 		UserVO userVO = (UserVO) session.getAttribute("login");
 		
-		vo.setUserId(userVO.getUserId());
-		service.update(vo);
-		return "redirect:/post/listAll";
+		userVOByForm.setUserId(userVO.getUserId());
+		userService.update(userVOByForm);
+		return "redirect:/post/readAll";
 	}
 	
 	// delete
@@ -104,20 +104,20 @@ public class UserController {
 	@GetMapping(value = "/withdraw")
 	public String withdrawGET(@RequestParam("userId") String userId)
 	{
-		service.delete(userId);
+		userService.delete(userId);
 		return "redirect:/";
 	}
 	@GetMapping(value = "/withdraw30")
-	public String withdraw30GET(HttpSession session, UserVO vo)
+	public String withdraw30GET(HttpSession session, UserVO userVOByForm)
 	{
 		UserVO userVO = (UserVO) session.getAttribute("login");
 		
-		vo.setUserId(userVO.getUserId());
-		vo.setUserPw(userVO.getUserPw());
-		vo.setUserName(userVO.getUserName());
-		vo.setEmail(userVO.getEmail());
-		vo.setUserFlag('N');
-		service.update(vo);
+		userVOByForm.setUserId(userVO.getUserId());
+		userVOByForm.setUserPw(userVO.getUserPw());
+		userVOByForm.setUserName(userVO.getUserName());
+		userVOByForm.setEmail(userVO.getEmail());
+		userVOByForm.setUserFlag('N');
+		userService.update(userVOByForm);
 		return "redirect:/";
 	}
 }

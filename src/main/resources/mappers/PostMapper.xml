@@ -7,37 +7,35 @@
 
 	<insert id="create" useGeneratedKeys="true" keyProperty="post_id">
 		INSERT INTO
-			board.post (post_id, user_id, post_regdate, post_updatedate, post_heart, title, post_content, filename, post_flag)
+			board.post (post_id, user_id, post_regdate, post_updatedate, title, post_content, filename, post_heart, post_replycount, post_flag)
 		VALUES
-			(LAST_INSERT_ID(), #{userId}, #{postRegdate}, #{postUpdatedate}, #{postHeart}, #{title}, #{postContent}, #{filename}, #{postFlag})
+			(LAST_INSERT_ID(), #{userId}, #{postRegdate}, #{postUpdatedate}, #{title}, #{postContent}, #{filename}, #{postHeart}, #{postReplycount}, #{postFlag})
 	</insert>
 
 	<select id="read" resultType="com.sj.vo.PostVO">
 		SELECT
-			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, post_heart AS postHeart, 
-			title AS title, post_content AS postContent, filename AS filename, post_flag AS postFlag
+			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, 
+			title AS title, post_content AS postContent, filename AS filename, post_heart AS postHeart, post_replycount AS postReplycount, post_flag AS postFlag
 		FROM
 			board.post
 		WHERE
 			post_id = #{postId}
 	</select>
 	
-	<select id="listAll" resultType="com.sj.vo.PostVO">
+	<select id="readAll" resultType="com.sj.vo.PostVO">
 		SELECT
-			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, post_heart AS postHeart, 
-			title AS title, post_content AS postContent, filename AS filename, post_flag AS postFlag
+			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, 
+			title AS title, post_content AS postContent, filename AS filename, post_heart AS postHeart, post_replycount AS postReplycount, post_flag AS postFlag
 		FROM
 			board.post
-		WHERE
-			post_flag = "Y"
 		ORDER BY
 			post_regdate DESC
 	</select>
 	
-	<select id="list5" resultType="com.sj.vo.PostVO">
+	<select id="read5Posts" resultType="com.sj.vo.PostVO">
 		SELECT
-			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, post_heart AS postHeart, 
-			title AS title, post_content AS postContent, filename AS filename, post_flag AS postFlag
+			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, 
+			title AS title, post_content AS postContent, filename AS filename, post_heart AS postHeart, post_replycount AS postReplycount, post_flag AS postFlag
 		FROM
 			board.post
 		WHERE
@@ -48,11 +46,77 @@
 			#{pageNum}, 5
 	</select>
 	
+	<select id="readMy5Posts" parameterType="map" resultType="com.sj.vo.PostVO">
+		SELECT
+			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, 
+			title AS title, post_content AS postContent, filename AS filename, post_heart AS postHeart, post_replycount AS postReplycount, post_flag AS postFlag
+		FROM
+			board.post
+		WHERE
+			user_id = #{userId} AND post_flag = "Y"
+		ORDER BY
+			post_regdate DESC
+		LIMIT
+			#{pageNum}, 5
+	</select>
+	
+	<select id="readPostReplycount" resultType="java.lang.Integer">
+		SELECT
+			post_replycount
+		FROM
+			board.post
+		WHERE
+			post_id = #{postId}
+	</select>
+	
+	<select id="readPostHeart" resultType="java.lang.Integer">
+		SELECT
+			post_heart
+		FROM
+			board.post
+		WHERE
+			post_id = #{postId}
+	</select>
+	
 	<update id="update">
 		UPDATE
 			board.post
 		SET
 			title = #{title}, post_content = #{postContent}, post_updatedate = #{postUpdatedate}, filename = #{filename}, post_flag = #{postFlag}
+		WHERE
+			post_id = #{postId}
+	</update>
+	
+	<update id="updateReplycountInc">
+		UPDATE
+			board.post
+		SET
+			post_replycount = post_replycount + 1
+		WHERE
+			post_id = #{postId}
+	</update>
+	<update id="updateReplycountDec">
+		UPDATE
+			board.post
+		SET
+			post_replycount = post_replycount - 1
+		WHERE
+			post_id = #{postId}
+	</update>
+	
+	<update id="updateHeartInc">
+		UPDATE
+			board.post
+		SET
+			post_heart = post_heart + 1
+		WHERE
+			post_id = #{postId}
+	</update>
+	<update id="updateHeartDec">
+		UPDATE
+			board.post
+		SET
+			post_heart = post_heart - 1
 		WHERE
 			post_id = #{postId}
 	</update>

@@ -2,48 +2,19 @@ package com.sj.service;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import com.sj.dao.ReplyDAO;
 import com.sj.vo.ReplyVO;
 
-@Service
-public class ReplyService {
-
-	@Inject private ReplyDAO dao;
-	private static final Logger logger = LoggerFactory.getLogger(ReplyService.class);
+public interface ReplyService {
 	
-	public void create(ReplyVO vo)
-	{
-		dao.create(vo);
-	}
-	
-	public List<ReplyVO> list(int postId)
-	{
-		return dao.list(postId);
-	}
-	
-	public List<ReplyVO> listDepth1(int replyId)
-	{
-		return dao.listDepth1(replyId);
-	}
-	
-	public List<ReplyVO> listAll()
-	{
-		return dao.listAll();
-	}
-	
-	public void update(ReplyVO vo)
-	{
-		dao.update(vo);
-	}
-	
-	public void delete(int replyId)
-	{
-		dao.delete(replyId);
-	}
+	public void create(ReplyVO replyVO, int postId);
+	public ReplyVO read(int replyId);
+	public List<ReplyVO> readDepth0(int postId);
+	public List<ReplyVO> readDepth1(int replyId);
+	public List<ReplyVO> readAll(int postId);
+	public int readReplyReplycount(int replyId);
+	public void update(ReplyVO replyVO);
+	public void updateReplycountInc(int replyId);
+	public void updateReplycountDec(int replyId);
+	public void delete(int replyId, int parentReplyId, int postId);
+	public boolean replyValidationCheck(String loginUserId, String postUserId);
 }

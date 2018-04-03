@@ -26,7 +26,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		{
 			logger.info("new login success : " + userVO);
 			session.setAttribute(LOGIN, userVO); // userVO saved
-			response.sendRedirect("/post/listAll");
+			response.sendRedirect("/post/readAll");
 		}
 		else
 		{

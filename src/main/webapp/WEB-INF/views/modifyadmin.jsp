@@ -24,34 +24,32 @@
 	<form id="modifyform" method="post" onsubmit="return user_modify()">
 		<table style="width: 550px; margin: auto; text-align: center;">
 			<tr>
-				<td>비밀번호</td>
+				<td>user_pw</td>
 			</tr>
 			<tr>
-				<td><input type="password" id="userPw" name="userPw" style="width: 200px" value="${login.userPw }"></td>
+				<td><input type="password" id="userPw" name="userPw" style="width: 200px" value="${userVO.userPw }"></td>
 			</tr>
 			<tr>
-				<td>비밀번호 확인</td>
+				<td>user_name</td>
 			</tr>
 			<tr>
-				<td><input type="password" id="userPwconfirm" name="userPwconfirm" style="width: 200px" value="${login.userPw }"></td>
+				<td><input type="text" id="userName" name="userName" style="width: 200px" value="${userVO.userName }"></td>
 			</tr>
 			<tr>
-				<td>이름</td>
+				<td>email</td>
 			</tr>
 			<tr>
-				<td><input type="text" id="userName" name="userName" style="width: 200px" value="${login.userName }"></td>
+				<td><input type="text" id="email" name="email" style="width: 200px" value="${userVO.email }"></td>
 			</tr>
 			<tr>
-				<td>이메일</td>
+				<td>user_flag</td>
 			</tr>
 			<tr>
-				<td><input type="text" id="email" name="email" style="width: 200px" value="${login.email }"></td>
+				<td><input type="text" id="userFlag" name="userFlag" style="width: 200px" value="${userVO.userFlag }"></td>
 			</tr>
 			<tr>
 				<td><button class="bodybutton" type="submit">수정</button>
-				<button class="bodybutton" type="button" onclick="location.href='/post/readAll'">취소</button>
-				<button class="bodybutton" type="button" onClick="location.href='/user/withdrawconfirm'">회원 즉시 탈퇴</button>
-				<button class="bodybutton" type="button" onClick="location.href='/user/withdrawconfirm30'">회원 일반 탈퇴</button></td>
+				<button class="bodybutton" type="button" onclick="location.href='/admin/users'">취소</button></td>
 			</tr>
 		</table>
 		<script type="text/javascript">
@@ -59,9 +57,9 @@
 			{
 				var reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 				var userPw = document.getElementById("userPw").value;
-				var userPwconfirm = document.getElementById("userPwconfirm").value;
 				var userName = document.getElementById("userName").value;
 				var email = document.getElementById("email").value;
+				var userFlag = document.getElementById("userFlag").value;
 				
 				// validation check
 				if (userPw.length < 1)
@@ -78,17 +76,23 @@
 				{
 					alert('이메일을 입력하세요.');
 					return false;
-				}	
+				}
 				if (! reg_email.test(email))
 				{
 					alert('이메일 형식이 올바르지 않습니다.');
 					return false;
 				}
-				if (userPw != userPwconfirm)
+				if (userFlag < 1)
 				{
-					alert("비밀번호 값과 비밀번호 확인 값이 다릅니다.")
+					alert('userFlag를 입력하세요.');
 					return false;
 				}
+				if (userFlag != 'Y' && userFlag != 'N')
+				{
+					alert('userFlag는 Y 또는 N 값만 가능합니다.');
+					return false;
+				}
+
 				// modify success
 				alert("정보가 수정되었습니다.");
 				return true;

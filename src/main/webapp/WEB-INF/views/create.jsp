@@ -39,14 +39,14 @@
 			<td><textarea name="postContent" rows="15" style="width: 600px"></textarea></td>
 		</tr>
 		<tr>
-			<td>파일 (용량 제한 : 10MB)</td>
+			<td>파일 (용량 제한 : 100MB)</td>
 		</tr>
 		<tr>
 			<td><input type="file" name="file"></td>
 		</tr>
 		<tr>
 			<td><button class="bodybutton" type="submit">등록</button>
-			<button class="bodybutton" type="button" onclick="location.href='/post/listAll'">취소</button></td>
+			<button class="bodybutton" type="button" onclick="location.href='/post/readAll'">취소</button></td>
 		</tr>
 	</table>
 	</form>

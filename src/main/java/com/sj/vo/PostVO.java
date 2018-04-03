@@ -8,10 +8,11 @@ public class PostVO {
 	private String userId;
 	private Date postRegdate;
 	private Date postUpdatedate;
-	private int postHeart;
 	private String title;
 	private String postContent;
 	private String filename;
+	private int postHeart;
+	private int postReplycount;
 	private char postFlag;
 	
 	public int getPostId() {
@@ -38,12 +39,6 @@ public class PostVO {
 	public void setPostUpdatedate(Date postUpdatedate) {
 		this.postUpdatedate = postUpdatedate;
 	}
-	public int getPostHeart() {
-		return postHeart;
-	}
-	public void setPostHeart(int postHeart) {
-		this.postHeart = postHeart;
-	}
 	public String getTitle() {
 		return title;
 	}
@@ -61,6 +56,18 @@ public class PostVO {
 	}
 	public void setFilename(String filename) {
 		this.filename = filename;
+	}
+	public int getPostHeart() {
+		return postHeart;
+	}
+	public void setPostHeart(int postHeart) {
+		this.postHeart = postHeart;
+	}
+	public int getPostReplycount() {
+		return postReplycount;
+	}
+	public void setPostReplycount(int postReplycount) {
+		this.postReplycount = postReplycount;
 	}
 	public char getPostFlag() {
 		return postFlag;

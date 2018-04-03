@@ -29,19 +29,19 @@
 		<c:set var="fileName" value="${postVO.filename }" />
 		<c:set var="filenameLength" value="${fn:length(fileName) }" />
 			<tr>
-				<td>제목</td>
+				<td>title</td>
 			</tr>
 			<tr>
 				<td><input type="text" name="title" style="width: 600px" value="${postVO.title }"></td>
 			</tr>
 			<tr>
-				<td>내용</td>
+				<td>post_content</td>
 			</tr>
 			<tr>
 				<td><textarea name="postContent" rows="15" style="width: 600px">${postVO.postContent }</textarea></td>
 			</tr>
 			<tr>
-				<td>파일 (용량 제한 : 100MB)</td>
+				<td>filename (용량 제한 : 10MB)</td>
 			</tr>
 			<tr>
 				<td><input type="file" name="file"></td>
@@ -52,8 +52,14 @@
 				</c:if></td>
 			</tr>
 			<tr>
+				<td>post_flag</td>
+			</tr>
+			<tr>
+				<td><input type="text" name="postFlag" style="width: 600px" value="${postVO.postFlag }"></td>
+			</tr>
+			<tr>
 				<td><button class="bodybutton" type="submit" onClick="post_update();">수정</button>
-				<button class="bodybutton" type="button" onclick="location.href='/post/readAll'">취소</button></td>
+				<button class="bodybutton" type="button" onclick="location.href='/admin/posts'">취소</button></td>
 			</tr>
 		</table>
 		<script>
@@ -61,6 +67,7 @@
 			{
 				var title = document.getElementById("title").value;
 				var postContent = document.getElementById("postContent").value;
+				var postFlag = document.getElementById("postFlag").value;
 				
 				if (title.length < 1)
 				{
@@ -70,6 +77,16 @@
 				if (postContent.length < 1)
 				{
 					alert("내용을 입력하세요.");
+					return false;
+				}
+				if (userFlag < 1)
+				{
+					alert('userFlag를 입력하세요.');
+					return false;
+				}
+				if (userFlag != 'Y' && userFlag != 'N')
+				{
+					alert('userFlag는 Y 또는 N 값만 가능합니다.');
 					return false;
 				}
 				

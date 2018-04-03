@@ -1,12 +1,11 @@
 package com.sj.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,19 +26,18 @@ import com.sj.vo.UserVO;
 @RequestMapping(value = "/reply")
 public class ReplyController {
 
-	private static final Logger logger = LoggerFactory.getLogger(PostController.class);
-	@Inject private ReplyService service;
+	@Inject private ReplyService replyService;
 	
 	// create
 	@PostMapping(value = "/")
-	public ResponseEntity<?> create(HttpSession session, @RequestBody ReplyVO vo)
+	public ResponseEntity<?> create(HttpSession session, @RequestBody ReplyVO replyVO)
 	{
 		UserVO userVO = (UserVO) session.getAttribute("login");
-		vo.setUserId(userVO.getUserId());
-		vo.setReplyRegdate(new Date());
-		vo.setReplyUpdatedate(new Date());
-		vo.setReplyFlag('Y');
-		service.create(vo);
+		replyVO.setUserId(userVO.getUserId());
+		replyVO.setReplyRegdate(new Date());
+		replyVO.setReplyUpdatedate(new Date());
+		replyVO.setReplyFlag('Y');
+		replyService.create(replyVO, replyVO.getPostId());
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
@@ -47,29 +45,59 @@ public class ReplyController {
 	@GetMapping(value = "/")
 	public ResponseEntity<?> read(@RequestParam("postId") int postId)
 	{
-		return new ResponseEntity<>(service.list(postId), HttpStatus.OK);
+		return new ResponseEntity<>(replyService.readDepth0(postId), HttpStatus.OK);
 	}
 	@GetMapping(value = "/rereply")
 	public ResponseEntity<?> readRereply(@RequestParam("replyId") int replyId)
 	{
-		return new ResponseEntity<>(service.listDepth1(replyId), HttpStatus.OK);
+		return new ResponseEntity<>(replyService.readDepth1(replyId), HttpStatus.OK);
+	}
+	@GetMapping(value = "/replyReplycount")
+	public ResponseEntity<?> readReplyReplyCount(@RequestParam("replyId") int replyId)
+	{
+		return new ResponseEntity<>(replyService.readReplyReplycount(replyId), HttpStatus.OK);
 	}
 	
 	// update
 	@PutMapping(value = "/{replyId}")
-	public ResponseEntity<?> update(@PathVariable("replyId") int replyId, @RequestBody ReplyVO vo)
+	public ResponseEntity<?> update(HttpSession session, @PathVariable("replyId") int replyId, @RequestBody ReplyVO replyVO)
 	{
-		vo.setReplyId(replyId);
-		vo.setReplyUpdatedate(new Date());
-		service.update(vo);
+		UserVO userVO = (UserVO) session.getAttribute("login");
+		
+		if (!replyService.replyValidationCheck(userVO.getUserId(), replyService.read(replyId).getUserId()))
+		{
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		
+		replyVO.setReplyId(replyId);
+		replyVO.setReplyUpdatedate(new Date());
+		replyService.update(replyVO);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
 	// delete
-	@DeleteMapping(value = "/{replyId}")
-	public ResponseEntity<?> delete(@PathVariable("replyId") int replyId)
+	@DeleteMapping(value = "/{postId}/{parentReplyId}/{replyId}")
+	public ResponseEntity<?> delete(HttpSession session, @PathVariable("postId") int postId, @PathVariable("parentReplyId") int parentReplyId, @PathVariable("replyId") int replyId)
 	{
-		service.delete(replyId);
+		UserVO userVO = (UserVO) session.getAttribute("login");
+		ReplyVO replyVO = replyService.read(replyId);
+		
+		if (!replyService.replyValidationCheck(userVO.getUserId(), replyVO.getUserId()))
+		{
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		
+		replyService.delete(replyId, parentReplyId, postId);
+		
+		if(replyVO.getReplyReplycount() > 0)
+		{
+			List<ReplyVO> replyVOList = replyService.readDepth1(replyId);
+			for (ReplyVO list : replyVOList)
+			{
+				replyService.delete(list.getReplyId(), replyId, postId);
+			}
+		}
+		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }
