@@ -64,7 +64,7 @@ public class ReplyController {
 	{
 		UserVO userVO = (UserVO) session.getAttribute("login");
 		
-		if (!replyService.replyValidationCheck(userVO.getUserId(), replyService.read(replyId).getUserId()))
+		if (!replyService.validateReply(userVO.getUserId(), replyService.read(replyId).getUserId()))
 		{
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
@@ -82,7 +82,7 @@ public class ReplyController {
 		UserVO userVO = (UserVO) session.getAttribute("login");
 		ReplyVO replyVO = replyService.read(replyId);
 		
-		if (!replyService.replyValidationCheck(userVO.getUserId(), replyVO.getUserId()))
+		if (!replyService.validateReply(userVO.getUserId(), replyVO.getUserId()))
 		{
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}

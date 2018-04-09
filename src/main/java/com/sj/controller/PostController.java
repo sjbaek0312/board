@@ -155,7 +155,7 @@ public class PostController {
 			return "update";
 		}
 	}
-
+	
 	// download
 	@GetMapping(value = "/download")
 	public void download(HttpServletResponse response, @RequestParam("postId") int postId) throws IOException

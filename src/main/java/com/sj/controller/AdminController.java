@@ -41,14 +41,14 @@ public class AdminController {
 		return "posts";
 	}
 	
-	@GetMapping(value = "/updateadmin")
+	@GetMapping(value = "/updateAdmin")
 	public String updateGET(@RequestParam("postId") int postId, Model model)
 	{
 		model.addAttribute("postVO", postService.read(postId));
-		return "updateadmin";
+		return "updateAdmin";
 	}
 	
-	@PostMapping(value = "/updateadmin")
+	@PostMapping(value = "/updateAdmin")
 	public String updatePOST(@RequestParam("postId") int postId, @RequestPart("file") MultipartFile file, PostVO postVO) throws IOException
 	{
 		postService.update(postVO, file, postId);
@@ -72,25 +72,25 @@ public class AdminController {
 		return "users";
 	}
 	
-	@GetMapping(value = "/joinadmin")
+	@GetMapping(value = "/joinAdmin")
 	public String joinGET()
 	{
-		return "joinadmin";
+		return "joinAdmin";
 	}
-	@PostMapping(value = "/joinadmin")
+	@PostMapping(value = "/joinAdmin")
 	public String joinPOST(UserVO userVO)
 	{
 		userService.create(userVO);
 		return "redirect:/admin/users";
 	}
 	
-	@GetMapping(value = "/modifyadmin")
+	@GetMapping(value = "/modifyAdmin")
 	public String modifyGET(@RequestParam("userId") String userId, Model model)
 	{
 		model.addAttribute("userVO", userService.read(userId));
-		return "modifyadmin";
+		return "modifyAdmin";
 	}
-	@PostMapping(value = "/modifyadmin")
+	@PostMapping(value = "/modifyAdmin")
 	public String modifyPOST(UserVO userVO)
 	{
 		userService.update(userVO);

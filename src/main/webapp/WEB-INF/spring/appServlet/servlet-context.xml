@@ -37,18 +37,16 @@
 	
 	<interceptors>
 		<interceptor>
-			<mapping path="/user/loginpost" />
+			<mapping path="/user/login" />
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
 		
 		<interceptor>
-			<mapping path="/post/create" />
-			<mapping path="/post/readAll" />
-			<mapping path="/post/readMy" />
-			<mapping path="/post/update" />
-			<mapping path="/post/delete" />
+			<mapping path="/post/*" />
+			<mapping path="/reply/*" />
 			<mapping path="/user/modify" />
-			<mapping path="/user/withdrawconfig" />
+			<mapping path="/user/withdrawconfirm" />
+			<mapping path="/user/withdrawconfirm30" />
 			<mapping path="/user/logout" />
 			<beans:ref bean="authInterceptor" />
 		</interceptor>

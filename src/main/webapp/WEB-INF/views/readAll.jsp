@@ -4,10 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
-<%
-	String ctx = request.getContextPath();
-	pageContext.setAttribute("ctx", ctx);
-%>
 <html>
 
 <head>
@@ -61,7 +57,7 @@
 					<button class="bodybutton" onclick="replyCreate(${postVO.postId });">댓글 달기</button>
 				</div>
 				<div id="replies${postVO.postId }">
-					<script>getList2('${postVO.postId}'); getPostReplycount('${postVO.postId}'); getPostHeart('${postVO.postId}');</script>
+
 				</div>
 				<div align="center">
 					<button class="bodybutton" type="button" onclick="getListAll(${postVO.postId });">댓글 펼치기...</button>
@@ -78,5 +74,10 @@
 	<div id="addpost">
 	</div>
 </div>
+<script>
+	getList2(document.getElementById("postId").value);
+	getPostReplycount(document.getElementById("postId").value);
+	getPostHeart(document.getElementById("postId").value);
+</script>
 </body>
 </html>

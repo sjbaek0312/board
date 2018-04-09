@@ -5,6 +5,18 @@
 	
 <mapper namespace="com.sj.mapper.ReplyMapper">
 
+	<resultMap type="com.sj.vo.ReplyVO" id="replyResultMap">
+		<id property="replyId" column="reply_id"/>
+		<result property="replyRegdate" column="reply_regdate"/>
+		<result property="replyUpdatedate" column="reply_updatedate"/>
+		<result property="replyContent" column="reply_content"/>
+		<result property="userId" column="user_id"/>
+		<result property="postId" column="post_id"/>
+		<result property="parentReplyId" column="parent_reply_id"/>
+		<result property="replyReplycount" column="reply_replycount"/>
+		<result property="replyFlag" column="reply_flag"/>
+	</resultMap>
+	
 	<insert id="create" useGeneratedKeys="true" keyProperty="reply_id">
 		INSERT INTO
 			board.reply (reply_id, reply_regdate, reply_updatedate, reply_content, user_id, post_id, parent_reply_id, reply_replycount, reply_flag)
@@ -12,20 +24,18 @@
 			(LAST_INSERT_ID(), #{replyRegdate}, #{replyUpdatedate}, #{replyContent}, #{userId}, #{postId}, #{parentReplyId}, #{replyReplycount}, #{replyFlag})
 	</insert>
 	
-	<select id="read" resultType="com.sj.vo.ReplyVO">
+	<select id="read" resultMap="replyResultMap">
 		SELECT
-			reply_id AS replyId, reply_regdate AS replyRegdate, reply_updatedate AS replyUpdatedate, reply_content AS replyContent,
-			user_id AS userId, post_id AS postId, parent_reply_id AS parentReplyId, reply_replycount AS replyReplycount, reply_flag AS replyFlag
+			*
 		FROM
 			board.reply
 		WHERE
 			reply_id = #{replyId}
 	</select>
 
-	<select id="readDepth0" resultType="com.sj.vo.ReplyVO">
+	<select id="readDepth0" resultMap="replyResultMap">
 		SELECT
-			reply_id AS replyId, reply_regdate AS replyRegdate, reply_updatedate AS replyUpdatedate, reply_content AS replyContent,
-			user_id AS userId, post_id AS postId, parent_reply_id AS parentReplyId, reply_replycount AS replyReplycount, reply_flag AS replyFlag
+			*
 		FROM
 			board.reply
 		WHERE
@@ -34,10 +44,9 @@
 			reply_regdate DESC
 	</select>
 	
-	<select id="readDepth1" resultType="com.sj.vo.ReplyVO">
+	<select id="readDepth1" resultMap="replyResultMap">
 		SELECT
-			reply_id AS replyId, reply_regdate AS replyRegdate, reply_updatedate AS replyUpdatedate, reply_content AS replyContent,
-			user_id AS userId, post_id AS postId, parent_reply_id AS parentReplyId, reply_replycount AS replyReplycount, reply_flag AS replyFlag
+			*
 		FROM
 			board.reply
 		WHERE
@@ -46,10 +55,9 @@
 			reply_regdate DESC
 	</select>
 	
-	<select id="readAll" resultType="com.sj.vo.ReplyVO">
+	<select id="readAll" resultMap="replyResultMap">
 		SELECT
-			reply_id AS replyId, reply_regdate AS replyRegdate, reply_updatedate AS replyUpdatedate, reply_content AS replyContent,
-			user_id AS userId, post_id AS postId, parent_reply_id AS parentReplyId, reply_replycount AS replyReplycount, reply_flag AS replyFlag
+			*
 		FROM
 			board.reply
 		WHERE
@@ -58,10 +66,9 @@
 			reply_regdate DESC
 	</select>
 	
-	<select id="read2Replies" resultType="com.sj.vo.ReplyVO">
+	<select id="read2Replies" resultMap="replyResultMap">
 		SELECT
-			reply_id AS replyId, reply_regdate AS replyRegdate, reply_updatedate AS replyUpdatedate, reply_content AS replyContent,
-			user_id AS userId, post_id AS postId, parent_reply_id AS parentReplyId, reply_replycount AS replyReplycount, reply_flag AS replyFlag
+			*
 		FROM
 			board.reply
 		WHERE
@@ -73,7 +80,7 @@
 
 	<select id="readReplyReplycount" resultType="java.lang.Integer">
 		SELECT
-			reply_replycount
+			reply_replycount AS replyReplycount
 		FROM
 			board.reply
 		WHERE

@@ -16,5 +16,5 @@ public interface ReplyService {
 	public void updateReplycountInc(int replyId);
 	public void updateReplycountDec(int replyId);
 	public void delete(int replyId, int parentReplyId, int postId);
-	public boolean replyValidationCheck(String loginUserId, String postUserId);
+	public boolean validateReply(String loginUserId, String postUserId);
 }

@@ -27,11 +27,12 @@ public class UserController {
 	{
 		return "login";
 	}
-	@PostMapping(value = "/loginpost")
+	@PostMapping(value = "/login")
 	public String loginPOST(LoginDTO loginDTO, Model model)
 	{
 		UserVO userVO = userService.login(loginDTO);
-
+		System.out.println("1 : "+userVO.getUserId());
+		System.out.println("2 : "+loginDTO.getUserId());
 		if (userVO != null)
 		{
 			if (userVO.getUserFlag() == 'Y')
@@ -39,7 +40,7 @@ public class UserController {
 				model.addAttribute("userVO", userVO);
 			}
 		}
-		return "loginpost";
+		return "login";
 	}
 	@GetMapping(value = "/logout")
 	public String logout(HttpSession session)

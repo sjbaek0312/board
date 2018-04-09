@@ -77,7 +77,7 @@ public class ReplyServiceImpl implements ReplyService {
 		}
 	}
 	
-	public boolean replyValidationCheck(String loginUserId, String postUserId)
+	public boolean validateReply(String loginUserId, String postUserId)
 	{
 		if (loginUserId.equals(postUserId))
 		{

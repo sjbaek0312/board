@@ -5,6 +5,15 @@
 	
 <mapper namespace="com.sj.mapper.UserMapper">
 
+	<resultMap type="com.sj.vo.UserVO" id="userResultMap">
+		<id property="userId" column="user_id"/>
+		<result property="userPw" column="user_pw"/>
+		<result property="userName" column="uesr_name"/>
+		<result property="email" column="email"/>
+		<result property="userRegdate" column="user_regdate"/>
+		<result property="userFlag" column="user_flag"/>
+	</resultMap>
+	
 	<insert id="create">
 		INSERT INTO
 			board.user (user_id, user_pw, user_name, email, user_regdate, user_flag)
@@ -12,20 +21,18 @@
 			(#{userId}, #{userPw}, #{userName}, #{email}, #{userRegdate}, #{userFlag})
 	</insert>
 
-	<select id="read" resultType="com.sj.vo.UserVO">
+	<select id="read" resultMap="userResultMap">
 		SELECT
-			user_id AS userId, user_pw AS userPw, user_name AS userName, email AS email,
-			user_regdate AS userRegdate, user_flag AS userFlag
+			*
 		FROM
 			board.user
 		WHERE
 			user_id = #{userId}
 	</select>
 		
-	<select id="readAll" resultType="com.sj.vo.UserVO">
+	<select id="readAll" resultMap="userResultMap">
 		SELECT
-			user_id AS userId, user_pw AS userPw, user_name AS userName, email AS email,
-			user_regdate AS userRegdate, user_flag AS userFlag
+			*
 		FROM
 			board.user
 	</select>
@@ -46,10 +53,9 @@
 			user_id = #{userId}
 	</delete>
 
-	<select id="login" resultType="com.sj.vo.UserVO">
+	<select id="login" resultMap="userResultMap">
 		SELECT
-			user_id AS userId, user_pw AS userPw, user_name AS userName, email AS email,
-			user_regdate AS userRegdate, user_flag AS userFlag
+			*
 		FROM
 			board.user
 		WHERE

@@ -1,27 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%
-	String ctx = request.getContextPath();
-	pageContext.setAttribute("ctx", ctx);
-%>
 <html>
 <head>
-<link href="<%=request.getContextPath() %>/resources/css/style.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/resources/css/style.css" rel="stylesheet"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>정보 수정</title>
+<script src="<%=request.getContextPath() %>/resources/js/checkFunctions.js"></script>
 </head>
 
 <body>
 <div class="head">
-<br>
-&emsp;정보 수정
-<br><br>
+	<br>
+	&emsp;정보 수정
+	<br><br>
 </div>
 
 <br><br>
 <div class="body">
-	<form id="modifyform" method="post" onsubmit="return user_modify()">
+	<form id="modifyform" method="post" onsubmit="return validateModifyform()">
 		<table style="width: 550px; margin: auto; text-align: center;">
 			<tr>
 				<td>비밀번호</td>
@@ -54,46 +51,6 @@
 				<button class="bodybutton" type="button" onClick="location.href='/user/withdrawconfirm30'">회원 일반 탈퇴</button></td>
 			</tr>
 		</table>
-		<script type="text/javascript">
-			function user_modify()
-			{
-				var reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-				var userPw = document.getElementById("userPw").value;
-				var userPwconfirm = document.getElementById("userPwconfirm").value;
-				var userName = document.getElementById("userName").value;
-				var email = document.getElementById("email").value;
-				
-				// validation check
-				if (userPw.length < 1)
-				{
-					alert('비밀번호를 입력하세요.');
-					return false;
-				}
-				if (userName.length < 1)
-				{
-					alert("이름을 입력하세요.");
-					return false;
-				}
-				if (email.length < 1)
-				{
-					alert('이메일을 입력하세요.');
-					return false;
-				}	
-				if (! reg_email.test(email))
-				{
-					alert('이메일 형식이 올바르지 않습니다.');
-					return false;
-				}
-				if (userPw != userPwconfirm)
-				{
-					alert("비밀번호 값과 비밀번호 확인 값이 다릅니다.")
-					return false;
-				}
-				// modify success
-				alert("정보가 수정되었습니다.");
-				return true;
-			}
-		</script>
 	</form>
 </div>
 </body>

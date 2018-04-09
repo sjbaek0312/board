@@ -28,10 +28,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			session.setAttribute(LOGIN, userVO); // userVO saved
 			response.sendRedirect("/post/readAll");
 		}
-		else
-		{
-			logger.info("login failed.");
-		}
 	}
 	
 	@Override

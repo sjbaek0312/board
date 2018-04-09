@@ -5,6 +5,20 @@
 	
 <mapper namespace="com.sj.mapper.PostMapper">
 
+	<resultMap type="com.sj.vo.PostVO" id="postResultMap">
+		<id property="postId" column="post_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="postRegdate" column="post_regdate"/>
+		<result property="postUpdatedate" column="post_updatedate"/>
+		<result property="title" column="title"/>
+		<result property="postContent" column="post_content"/>
+		<result property="filename" column="filename"/>
+		<result property="postHeart" column="post_heart"/>
+		<result property="postReplycount" column="post_replycount"/>
+		<result property="postFlag" column="post_flag"/>
+	</resultMap>
+	
+	
 	<insert id="create" useGeneratedKeys="true" keyProperty="post_id">
 		INSERT INTO
 			board.post (post_id, user_id, post_regdate, post_updatedate, title, post_content, filename, post_heart, post_replycount, post_flag)
@@ -12,30 +26,27 @@
 			(LAST_INSERT_ID(), #{userId}, #{postRegdate}, #{postUpdatedate}, #{title}, #{postContent}, #{filename}, #{postHeart}, #{postReplycount}, #{postFlag})
 	</insert>
 
-	<select id="read" resultType="com.sj.vo.PostVO">
+	<select id="read" resultMap="postResultMap">
 		SELECT
-			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, 
-			title AS title, post_content AS postContent, filename AS filename, post_heart AS postHeart, post_replycount AS postReplycount, post_flag AS postFlag
+			*
 		FROM
 			board.post
 		WHERE
 			post_id = #{postId}
 	</select>
 	
-	<select id="readAll" resultType="com.sj.vo.PostVO">
+	<select id="readAll" resultMap="postResultMap">
 		SELECT
-			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, 
-			title AS title, post_content AS postContent, filename AS filename, post_heart AS postHeart, post_replycount AS postReplycount, post_flag AS postFlag
+			*
 		FROM
 			board.post
 		ORDER BY
 			post_regdate DESC
 	</select>
 	
-	<select id="read5Posts" resultType="com.sj.vo.PostVO">
+	<select id="read5Posts" resultMap="postResultMap">
 		SELECT
-			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, 
-			title AS title, post_content AS postContent, filename AS filename, post_heart AS postHeart, post_replycount AS postReplycount, post_flag AS postFlag
+			*
 		FROM
 			board.post
 		WHERE
@@ -46,10 +57,9 @@
 			#{pageNum}, 5
 	</select>
 	
-	<select id="readMy5Posts" parameterType="map" resultType="com.sj.vo.PostVO">
+	<select id="readMy5Posts" parameterType="map" resultMap="postResultMap">
 		SELECT
-			post_id AS postId, user_id AS userId, post_regdate AS postRegdate, post_updatedate AS postUpdatedate, 
-			title AS title, post_content AS postContent, filename AS filename, post_heart AS postHeart, post_replycount AS postReplycount, post_flag AS postFlag
+			*
 		FROM
 			board.post
 		WHERE
@@ -62,7 +72,7 @@
 	
 	<select id="readPostReplycount" resultType="java.lang.Integer">
 		SELECT
-			post_replycount
+			post_replycount AS postReplyocunt
 		FROM
 			board.post
 		WHERE
@@ -71,7 +81,7 @@
 	
 	<select id="readPostHeart" resultType="java.lang.Integer">
 		SELECT
-			post_heart
+			post_heart AS postHeart
 		FROM
 			board.post
 		WHERE

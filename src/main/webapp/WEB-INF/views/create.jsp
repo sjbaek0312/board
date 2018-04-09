@@ -1,25 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
-<%
-	String ctx = request.getContextPath();
-	pageContext.setAttribute("ctx", ctx);
-%>
 <html>
-
 <head>
-<link href="<%=request.getContextPath() %>/resources/css/style.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/resources/css/style.css" rel="stylesheet"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>게시물 등록</title>
 </head>
 
 <body>
 <div class="head">
-<br>
-&emsp;게시물 등록하기
-<br><br>
+	<br>
+	&emsp;게시물 등록하기
+	<br><br>
 </div>
 
 <br><br>
